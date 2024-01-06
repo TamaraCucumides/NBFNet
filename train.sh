@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --workdir=/home/tacucumides/storage
 #SBATCH --ntasks=1
-#SBATCH --job-name=fb15k-mixed-train
+#SBATCH --job-name=nbfnet-train
 #SBATCH --nodelist=hydra
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=tacucumides@uc.cl
