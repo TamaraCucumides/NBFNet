@@ -45,21 +45,22 @@ def test(cfg, solver):
 
 
 if __name__ == "__main__":
-    if not torch.cuda.is_available():
-        return
-    args, vars = util.parse_args()
-    cfg = util.load_config(args.config, context=vars)
-    working_dir = util.create_working_directory(cfg)
-
-    torch.manual_seed(args.seed + comm.get_rank())
-
-    logger = util.get_root_logger()
-    if comm.get_rank() == 0:
-        logger.warning("Config file: %s" % args.config)
-        logger.warning(pprint.pformat(cfg))
-
-    dataset = core.Configurable.load_config_dict(cfg.dataset)
-    solver = util.build_solver(cfg, dataset)
-
-    train_and_validate(cfg, solver)
-    test(cfg, solver)
+    if torch.cuda.is_available():
+        args, vars = util.parse_args()
+        cfg = util.load_config(args.config, context=vars)
+        working_dir = util.create_working_directory(cfg)
+    
+        torch.manual_seed(args.seed + comm.get_rank())
+    
+        logger = util.get_root_logger()
+        if comm.get_rank() == 0:
+            logger.warning("Config file: %s" % args.config)
+            logger.warning(pprint.pformat(cfg))
+    
+        dataset = core.Configurable.load_config_dict(cfg.dataset)
+        solver = util.build_solver(cfg, dataset)
+    
+        train_and_validate(cfg, solver)
+        test(cfg, solver)
+    else:
+        print("Cuda disponible?", torch.cuda.is_available())
