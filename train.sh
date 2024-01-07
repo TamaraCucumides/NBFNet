@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --workdir=/home/tacucumides/storage
 #SBATCH --ntasks=1
-#SBATCH --job-name=nbfnet-train
+#SBATCH --job-name=tri-gnn-qe
 #SBATCH --nodelist=hydra
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=tacucumides@uc.cl
-#SBATCH --output=/home/tacucumides/storage/NBFNet/logs
+#SBATCH --output=/home/tacucumides/storage/NBFNet/logs/%A.log
 #SBATCH --gres=gpu:TitanRTX:1
 #SBATCH --cpus=2
 #SBATCH --partition=ialab-high
