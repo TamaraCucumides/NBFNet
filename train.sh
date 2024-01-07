@@ -15,6 +15,6 @@ echo "Start"
 echo $(pwd)
 cd /home/tacucumides/storage
 source miniconda3/etc/profile.d/conda.sh
-conda activate gnn-qe
+conda activate nbfnet
 cd /home/tacucumides/storage/NBFNet
 python script/run.py -c config/knowledge_graph/fb15k237.yaml --gpus [0] --version v1
