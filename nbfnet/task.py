@@ -330,6 +330,7 @@ class InductiveKnowledgeGraphCompletion(tasks.KnowledgeGraphCompletion, core.Con
         return mask.cpu(), target.cpu()
 
     def evaluate(self, pred, target):
+        print("Graph completion inductive, evaluate")
         mask, target = target
 
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
