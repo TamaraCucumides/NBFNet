@@ -483,6 +483,7 @@ class KnowledgeGraphCompletionOGB(tasks.KnowledgeGraphCompletion, core.Configura
         return target.cpu()
 
     def evaluate(self, pred, target):
+        print("Graph completion ogb, evaluate")
         is_positive = torch.zeros(pred.shape, dtype=torch.bool)
         is_positive.scatter_(-1, target.unsqueeze(-1), 1)
         pos_pred = pred[is_positive]
