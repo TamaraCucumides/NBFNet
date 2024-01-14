@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --workdir=/home/tacucumides/storage
 #SBATCH --ntasks=1
-#SBATCH --job-name=nbfnet-train
+#SBATCH --job-name=nbfnet-test
 #SBATCH --nodelist=scylla
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=tacucumides@uc.cl
