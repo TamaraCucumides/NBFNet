@@ -58,6 +58,7 @@ class KnowledgeGraphCompletionExt(tasks.KnowledgeGraphCompletion, core.Configura
         return mask, target, relation.cpu()
 
     def evaluate(self, pred, target):
+        print("Graph completion, evaluate")
         mask, target, relation = target
 
         print("mask shape", mask.shape)
@@ -182,6 +183,7 @@ class LinkPrediction(tasks.Task, core.Configurable):
         return neg_h_index, neg_t_index
 
     def predict_and_target(self, batch, all_loss=None, metric=None):
+        print("Link prediction, predict and target")
         batch_size = len(batch)
         pos_h_index, pos_t_index = batch.t()
 
@@ -206,6 +208,7 @@ class LinkPrediction(tasks.Task, core.Configurable):
         return pred, target
 
     def evaluate(self, pred, target):
+        print("Link prediction, evaluate")
         pred = pred.flatten()
         target = target.flatten()
 
