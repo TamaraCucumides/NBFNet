@@ -61,11 +61,11 @@ class KnowledgeGraphCompletionExt(tasks.KnowledgeGraphCompletion, core.Configura
         print("Graph completion, evaluate")
         mask, target, relation = target
 
-        print("mask shape", mask.shape)
-        print(mask)
-        print("target shape", target.shape)
-        print(target)
-        print(relation)
+        #print("mask shape", mask.shape)
+        #print(mask)
+        #print("target shape", target.shape)
+        #print(target)
+        #print(relation)
 
         
 
