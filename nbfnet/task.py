@@ -10,6 +10,8 @@ from torchdrug import core, tasks, metrics
 from torchdrug.layers import functional
 from torchdrug.core import Registry as R
 
+from .util import save_results
+
 
 Evaluator = core.make_configurable(linkproppred.Evaluator)
 Evaluator = R.register("ogb.linkproppred.Evaluator")(Evaluator)
@@ -60,6 +62,8 @@ class KnowledgeGraphCompletionExt(tasks.KnowledgeGraphCompletion, core.Configura
     def evaluate(self, pred, target):
         print("Graph completion, evaluate")
         mask, target, relation = target
+
+        save_results()
 
         #print("mask shape", mask.shape)
         #print(mask)
