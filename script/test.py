@@ -13,6 +13,7 @@ from nbfnet import dataset, layer, model, task, util
 
 
 def test(cfg, solver):
+    print("Test script")
     #solver.model.split = "valid"
     #solver.evaluate("valid")
     # Test only on test set? What is the test set here? How can I get the full graph completion?
