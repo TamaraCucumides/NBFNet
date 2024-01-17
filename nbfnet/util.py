@@ -120,3 +120,16 @@ def build_solver(cfg, dataset):
         solver.load(cfg.checkpoint)
 
     return solver
+
+def save_results(folder='data'):
+    if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    filename = os.path.join(folder, f'preds_{data_type}.csv')
+    with open(filename, 'a', newline='') as csvfile:
+            fieldnames = ['easy', 'hard', 'pred']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+            # If the file is empty, write the header
+            if csvfile.tell() == 0:
+                writer.writeheader()
