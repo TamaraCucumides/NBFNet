@@ -133,3 +133,5 @@ def save_results(folder='data'):
             # If the file is empty, write the header
             if csvfile.tell() == 0:
                 writer.writeheader()
+
+
