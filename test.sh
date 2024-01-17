@@ -2,7 +2,7 @@
 #SBATCH --workdir=/home/tacucumides/storage
 #SBATCH --ntasks=1
 #SBATCH --job-name=nbfnet-test
-#SBATCH --nodelist=hydra
+#SBATCH --nodelist=scylla
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=tacucumides@uc.cl
 #SBATCH --output=/home/tacucumides/storage/NBFNet/logs/%A.log
