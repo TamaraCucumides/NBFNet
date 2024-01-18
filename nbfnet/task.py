@@ -18,7 +18,7 @@ Evaluator = R.register("ogb.linkproppred.Evaluator")(Evaluator)
 setattr(linkproppred, "Evaluator", Evaluator)
 
 
-@R.register("tasks.KnowledgeGraphCompletion")
+@R.register("tasks.KnowledgeGraphCompletionV2")
 class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
     """
     Knowledge graph completion task.
