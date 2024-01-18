@@ -5,7 +5,7 @@ dataset:
   path: ~/datasets/knowledge_graphs/
 
 task:
-  class: KnowledgeGraphCompletion
+  class: KnowledgeGraphCompletionV2
   model:
     class: NBFNet
     input_dim: 32
