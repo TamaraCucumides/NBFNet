@@ -205,6 +205,14 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("Evaluate!!!!!!")
         mask, target = target
 
+        print("pred shape", pred.shape)
+        print(pred)
+        print("mask shape", mask.shape)
+        print(mask)
+        print("target shape", target.shape)
+        print(target)
+        
+
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
         if self.filtered_ranking:
             ranking = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
