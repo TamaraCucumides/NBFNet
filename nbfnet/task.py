@@ -219,6 +219,9 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         else:
             ranking = torch.sum(pos_pred <= pred, dim=-1) + 1
 
+        print("ranking", ranking.shape)
+        print(ranking)
+
         metric = {}
         for _metric in self.metric:
             if _metric == "mr":
