@@ -222,6 +222,14 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("ranking", ranking.shape)
         print(ranking)
 
+        # change this if you want to save it
+        if False:
+            torch.save(pred, 'pred.pt')
+            torch.save(mask, 'mask.pt')
+            torch.save(target, 'target.pt')
+            torch.save(ranking, 'ranking.pt')
+            
+
         metric = {}
         for _metric in self.metric:
             if _metric == "mr":
