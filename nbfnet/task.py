@@ -223,11 +223,21 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print(ranking)
 
         # change this if you want to save it
-        if False:
-            torch.save(pred, 'pred.pt')
-            torch.save(mask, 'mask.pt')
-            torch.save(target, 'target.pt')
-            torch.save(ranking, 'ranking.pt')
+        if True:
+            if not os.path.exists("data"):
+                os.makedirs("data")
+
+            data_type='kg_completion'
+
+            pred_filename = os.path.join(folder, f'pred_{data_type}.pt')
+            mask_filename = os.path.join(folder, f'mask_{data_type}.pt')
+            target_filename = os.path.join(folder, f'target_{data_type}.pt')
+            ranking_filename = os.path.join(folder, f'ranking_{data_type}.pt')
+            
+            torch.save(pred, pred_filename)
+            torch.save(mask, mask_filename)
+            torch.save(target, target_filename)
+            torch.save(ranking, ranking_filename)
             
 
         metric = {}
