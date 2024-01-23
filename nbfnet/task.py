@@ -11,6 +11,7 @@ from torchdrug.layers import functional
 from torchdrug.core import Registry as R
 
 from .util import save_results
+import os
 
 
 Evaluator = core.make_configurable(linkproppred.Evaluator)
