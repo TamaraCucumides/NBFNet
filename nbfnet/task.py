@@ -225,8 +225,9 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
         # change this if you want to save it
         if True:
-            if not os.path.exists("data"):
-                os.makedirs("data")
+            folder="data"
+            if not os.path.exists(folder):
+                os.makedirs(folder)
 
             data_type='kg_completion'
 
