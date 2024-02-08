@@ -35,3 +35,4 @@ train:
   num_epoch: 0
 
 metric: mrr
+checkpoint: {{ checkpoint }}
