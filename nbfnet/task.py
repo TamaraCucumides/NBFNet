@@ -62,6 +62,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         self.full_batch_eval = full_batch_eval
 
     def preprocess(self, train_set, valid_set, test_set):
+        print("Preprocess")
         if isinstance(train_set, torch_data.Subset):
             dataset = train_set.dataset
         else:
@@ -93,6 +94,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def forward(self, batch, all_loss=None, metric=None):
         """"""
+        print("forward")
         all_loss = torch.tensor(0, dtype=torch.float32, device=self.device)
         metric = {}
 
@@ -137,6 +139,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return all_loss, metric
 
     def predict(self, batch, all_loss=None, metric=None):
+        print("predict")
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
 
@@ -177,6 +180,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return pred
 
     def target(self, batch):
+        print("target")
         # test target
         batch_size = len(batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
@@ -206,12 +210,12 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("Evaluate!!!!!!")
         mask, target = target
 
-        print("pred shape", pred.shape)
-        print(pred)
-        print("mask shape", mask.shape)
-        print(mask)
-        print("target shape", target.shape)
-        print(target)
+        #print("pred shape", pred.shape)
+        #print(pred)
+        #print("mask shape", mask.shape)
+        #print(mask)
+        #print("target shape", target.shape)
+        #print(target)
         
 
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
