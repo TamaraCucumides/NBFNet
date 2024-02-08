@@ -141,6 +141,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
     def predict(self, batch, all_loss=None, metric=None):
         print("predict")
         pos_h_index, pos_t_index, pos_r_index = batch.t()
+        print(pos_h_index, pos_t_index, pos_r_index)
         batch_size = len(batch)
 
         if all_loss is None:
@@ -177,6 +178,8 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
 
+            print(pred)
+
         return pred
 
     def target(self, batch):
@@ -210,8 +213,8 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("Evaluate!!!!!!")
         mask, target = target
 
-        #print("pred shape", pred.shape)
-        #print(pred)
+        print("pred shape", pred.shape)
+        print(pred)
         #print("mask shape", mask.shape)
         #print(mask)
         #print("target shape", target.shape)
