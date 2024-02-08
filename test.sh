@@ -17,4 +17,4 @@ cd /home/tacucumides/storage
 source miniconda3/etc/profile.d/conda.sh
 conda activate nbfnet
 cd /home/tacucumides/storage/NBFNet
-python script/run.py -c config/knowledge_graph/fb15k237-test.yaml --checkpoint ../2024-01-14-12-42-34/model_epoch_14.pth  --gpus [0] --version v1
+python script/run.py -c config/knowledge_graph/fb15k237-test.yaml --checkpoint ../pesos/model_epoch_14.pth  --gpus [0] --version v1
