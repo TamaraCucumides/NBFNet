@@ -2,7 +2,7 @@ output_dir: ~/storage/nbfnet-experiments/
 
 dataset:
   class: FB15k237
-  path: ~/datasets/knowledge_graphs/stupid_test/
+  path: ~/datasets/knowledge_graphs/stupid-tests/
 
 task:
   class: KnowledgeGraphCompletionV2
