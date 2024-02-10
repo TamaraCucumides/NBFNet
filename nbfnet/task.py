@@ -231,7 +231,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print(ranking)
 
         # change this if you want to save it
-        if True:
+        if False:
             folder="data"
             if not os.path.exists(folder):
                 os.makedirs(folder)
