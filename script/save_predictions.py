@@ -29,7 +29,7 @@ def create_triples(relation):
   return triples
 
 def obtain_results(solver, triplet):
-    h, t, r = triplet.tolist()
+    h, t, r = triplet
     triplet = torch.as_tensor([[h, t, r]], device=solver.device)
     inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
     solver.model.eval()
