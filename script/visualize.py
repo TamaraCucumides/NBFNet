@@ -1,6 +1,7 @@
 import os
 import sys
 import pprint
+import time
 
 import torch
 
@@ -36,8 +37,11 @@ def visualize_path(solver, triplet, entity_vocab, relation_vocab):
     print("h,t,r", h,t,r)
     triplet = torch.as_tensor([[h, t, r]], device=solver.device)
     inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
+    start_time = time.time()
     solver.model.eval()
     pred, (mask, target) = solver.model.predict_and_target(triplet)
+    end_time = time.time()
+    print("Time to predict", end_time - start_time)
     pos_pred = pred.gather(-1, target.unsqueeze(-1))
     rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     rankings = rankings.squeeze(0)
