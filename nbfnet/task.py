@@ -207,31 +207,12 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return mask.cpu(), target.cpu()
 
     def evaluate(self, pred, target):
-
+        mask, target = target
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
         if self.filtered_ranking:
             ranking = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
         else:
             ranking = torch.sum(pos_pred <= pred, dim=-1) + 1
-
-
-        # change this if you want to save it
-        if False:
-            folder="data"
-            if not os.path.exists(folder):
-                os.makedirs(folder)
-
-            data_type='kg_completion'
-
-            pred_filename = os.path.join(folder, f'pred_{data_type}.pt')
-            mask_filename = os.path.join(folder, f'mask_{data_type}.pt')
-            target_filename = os.path.join(folder, f'target_{data_type}.pt')
-            ranking_filename = os.path.join(folder, f'ranking_{data_type}.pt')
-            
-            torch.save(pred, pred_filename)
-            torch.save(mask, mask_filename)
-            torch.save(target, target_filename)
-            torch.save(ranking, ranking_filename)
             
 
         metric = {}
