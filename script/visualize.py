@@ -29,8 +29,11 @@ def load_vocab(dataset):
 
 
 def visualize_path(solver, triplet, entity_vocab, relation_vocab):
+    print("Triplet", triplet)
     num_relation = len(relation_vocab)
+    print(num_relation)
     h, t, r = triplet.tolist()
+    print("h,t,r", h,t,r)
     triplet = torch.as_tensor([[h, t, r]], device=solver.device)
     inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
     solver.model.eval()
