@@ -65,7 +65,7 @@ if __name__ == "__main__":
       result_tensor = torch.empty(0, 14541, device=solver.device)
       for t in triples:
         tensor_row = obtain_results(solver, t).unsqueeze(0)  # Unsqueezing to add a new dimension (to make it a row tensor)
-        result_tensor = torch.cat((result_tensor, tensor_row), dim=0)
+        result_tensor = torch.cat((result_tensor, tensor_row.cuda()), dim=0)
       save_tensor(relation, result_tensor)
 
 
