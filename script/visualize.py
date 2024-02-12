@@ -42,9 +42,17 @@ def visualize_path(solver, triplet, entity_vocab, relation_vocab):
     pred, (mask, target) = solver.model.predict_and_target(triplet)
     end_time = time.time()
     print("Time to predict", end_time - start_time)
+
+    print("pred", pred)
+    print("mask", mask)
+    print("target", target)
+    
     pos_pred = pred.gather(-1, target.unsqueeze(-1))
     rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     rankings = rankings.squeeze(0)
+
+    print(rankings)
+    return 
 
     logger.warning("")
     samples = (triplet, inverse)
@@ -82,8 +90,8 @@ if __name__ == "__main__":
     logger.warning("Config file: %s" % args.config)
     logger.warning(pprint.pformat(cfg))
 
-    if cfg.dataset["class"] != "FB15k237":
-        raise ValueError("Visualization is only implemented for FB15k237")
+    #if cfg.dataset["class"] != "FB15k237":
+    #    raise ValueError("Visualization is only implemented for FB15k237")
 
     dataset = core.Configurable.load_config_dict(cfg.dataset)
     solver = util.build_solver(cfg, dataset)
