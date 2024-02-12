@@ -37,7 +37,7 @@ def obtain_results(solver, triplet):
     #pos_pred = pred.gather(-1, target.unsqueeze(-1))
     #rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     #rankings = rankings.squeeze(0)
-    return pred
+    return pred[0]
 
 
 if __name__ == "__main__":
