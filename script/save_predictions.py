@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
     for relation in range(4):
       triples = create_triples(relation)
-      result_tensor = torch.stack([obtain_results(t) for t in triples], dim=0)
+      result_tensor = torch.stack([obtain_results(solver, t) for t in triples], dim=0)
       save_tensor(relation, result_tensor)
 
 
