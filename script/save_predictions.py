@@ -54,6 +54,12 @@ if __name__ == "__main__":
     dataset = core.Configurable.load_config_dict(cfg.dataset)
     solver = util.build_solver(cfg, dataset)
 
+    # get the current working directory
+    current_working_directory = os.getcwd()
+
+    # print output to the console
+    print("Current directory", current_working_directory)
+
     for relation in range(4):
       triples = create_triples(relation)
       result_tensor = torch.stack([obtain_results(t) for t in triples], dim=0)
