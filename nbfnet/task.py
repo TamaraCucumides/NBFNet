@@ -139,7 +139,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return all_loss, metric
 
     def predict(self, batch, all_loss=None, metric=None):
-        print("predict")
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         print(pos_h_index, pos_t_index, pos_r_index)
         batch_size = len(batch)
@@ -178,12 +177,9 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
 
-        print(pred)
-
         return pred
 
     def target(self, batch):
-        print("target")
         # test target
         batch_size = len(batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
@@ -210,16 +206,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return mask.cpu(), target.cpu()
 
     def evaluate(self, pred, target):
-        print("Evaluate!!!!!!")
-        mask, target = target
-
-        print("pred shape", pred.shape)
-        print(pred)
-        #print("mask shape", mask.shape)
-        #print(mask)
-        #print("target shape", target.shape)
-        #print(target)
-        
 
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
         if self.filtered_ranking:
@@ -227,8 +213,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         else:
             ranking = torch.sum(pos_pred <= pred, dim=-1) + 1
 
-        print("ranking", ranking.shape)
-        print(ranking)
 
         # change this if you want to save it
         if False:
