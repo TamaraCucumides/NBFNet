@@ -1,8 +1,8 @@
-output_dir: ~/experiments/
+output_dir: ~/storage/nbfnet-experiments/
 
 dataset:
-  class: FB15k237
-  path: ~/datasets/knowledge_graphs/
+  class: FB15k237-2
+  path: ~/datasets/knowledge_graphs/stupid-tests/
 
 task:
   class: KnowledgeGraphCompletion
