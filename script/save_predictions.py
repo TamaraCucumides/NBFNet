@@ -10,28 +10,34 @@ from torchdrug.utils import comm
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from nbfnet import dataset, layer, model, task, util
 
-def load_data():
-  """Loads id2rel and id2ent"""
+def save_tensor(relation, preds):
+  """receives the relation number, alongside with the tensor with all predictions 
+  and saves it into the respective .pt"""
+
+  
   pass
 
-def save_tensor(h,t,r,pred):
-  """for a triple, it saves the predictions in the corresponding .pt """
-  pass
-
-def create_triples(relation, id2rel, id2ent):
+def create_triples(relation):
   """Create all the relevant triples"""
-  return None
+
+  triples = [] 
+  for i in range(14541):
+    t = [i, relation, 1]
+    triples.append(t)
+  return triples
 
 
-def save_results(solver, triplet):
+def obtain_results(solver, triplet):
     h, t, r = triplet.tolist()
     triplet = torch.as_tensor([[h, t, r]], device=solver.device)
     inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
     solver.model.eval()
     pred, (mask, target) = solver.model.predict_and_target(triplet)
-    pos_pred = pred.gather(-1, target.unsqueeze(-1))
-    rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
-    rankings = rankings.squeeze(0)
+    #pos_pred = pred.gather(-1, target.unsqueeze(-1))
+    #rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
+    #rankings = rankings.squeeze(0)
+  
+    return pred
 
 
 if __name__ == "__main__":
@@ -48,11 +54,10 @@ if __name__ == "__main__":
     dataset = core.Configurable.load_config_dict(cfg.dataset)
     solver = util.build_solver(cfg, dataset)
 
-    id2ent, id2rel = load_data()
+    for relation in range(4):
+      triples = create_triples(relation)
+      result_tensor = torch.stack([obtain_results(t) for t in triples], dim=0)
+      save_tensor(relation, result_tensor)
 
-    triples = create_triples(1, id2ent, id2rel)
-
-    for t in triples:
-      save_results(solver, triple)
 
     
