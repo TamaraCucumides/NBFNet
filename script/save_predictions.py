@@ -90,6 +90,7 @@ if __name__ == "__main__":
         torch.cuda.empty_cache()
         batch_cuda = batch.to("cuda")
         batch_preds = batch_results(solver, batch_cuda)
+        print("Batch_preds", batch_preds)
         del batch_cuda
         batch_size = batch_preds.size(0)
         result_tensor[index:index+batch_size] = batch_preds
