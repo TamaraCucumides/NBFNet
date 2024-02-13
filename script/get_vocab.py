@@ -86,37 +86,39 @@ if __name__ == "__main__":
     cfg = util.load_config(args.config, context=vars)
 
     print(cfg)
-    return 
-    working_dir = util.create_working_directory(cfg)
 
-    torch.manual_seed(args.seed + comm.get_rank())
-
-    logger = util.get_root_logger()
-    logger.warning("Config file: %s" % args.config)
-    logger.warning(pprint.pformat(cfg))
-
-    #if cfg.dataset["class"] != "FB15k237":
-    #    raise ValueError("Visualization is only implemented for FB15k237")
-
-    dataset = core.Configurable.load_config_dict(cfg.dataset)
-    #solver = util.build_solver(cfg, dataset)
-
-    entity_vocab, relation_vocab = load_vocab(dataset)
-
-    folder = "vocab"
-
-    if not os.path.exists(folder):
-      os.makedirs(folder)
-
-    # File path to save the pickle file
-    file_path = os.path.join(folder, 'entity_vocab.pickle')
-
-    with open(file_path, 'wb') as file:
-      pickle.dump(entity_vocab, file)
-
-    file_path = os.path.join(folder, 'relation_vocab.pickle')
-
-    with open(file_path, 'wb') as file:
-      pickle.dump(relation_vocab, file)
+    if False:
+        
+        working_dir = util.create_working_directory(cfg)
+    
+        torch.manual_seed(args.seed + comm.get_rank())
+    
+        logger = util.get_root_logger()
+        logger.warning("Config file: %s" % args.config)
+        logger.warning(pprint.pformat(cfg))
+    
+        #if cfg.dataset["class"] != "FB15k237":
+        #    raise ValueError("Visualization is only implemented for FB15k237")
+    
+        dataset = core.Configurable.load_config_dict(cfg.dataset)
+        #solver = util.build_solver(cfg, dataset)
+    
+        entity_vocab, relation_vocab = load_vocab(dataset)
+    
+        folder = "vocab"
+    
+        if not os.path.exists(folder):
+          os.makedirs(folder)
+    
+        # File path to save the pickle file
+        file_path = os.path.join(folder, 'entity_vocab.pickle')
+    
+        with open(file_path, 'wb') as file:
+          pickle.dump(entity_vocab, file)
+    
+        file_path = os.path.join(folder, 'relation_vocab.pickle')
+    
+        with open(file_path, 'wb') as file:
+          pickle.dump(relation_vocab, file)
 
     
