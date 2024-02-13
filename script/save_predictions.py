@@ -99,6 +99,7 @@ if __name__ == "__main__":
         save_tensor(relation, result_tensor)
         
       for t in triples:
+        print("Triplet", t)
         tensor_row = obtain_results(solver, t).unsqueeze(0).cpu()  # Unsqueezing to add a new dimension (to make it a row tensor)
         result_tensor[index] = tensor_row
         index += 1
