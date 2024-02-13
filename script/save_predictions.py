@@ -49,7 +49,7 @@ def batch_results(solver, batch):
     solver.model.eval()
     pred = solver.model.predict(batch)
   
-    return torch.round(pred[0][0] * 100).to(torch.float16)
+    return torch.round(pred[0][0]).to(torch.float16)
 
 
 if __name__ == "__main__":
