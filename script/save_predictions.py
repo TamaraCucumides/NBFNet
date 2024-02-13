@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     for relation in range(4):
       triples = create_triples(relation)
-      result_tensor = torch.empty(0, 14541, device=solver.device)
+      result_tensor = torch.empty(0, 14541, dtype=torch.int8, device=solver.device)
       print("Result tensor shape", result_tensor.shape)
       print(result_tensor)
       for t in triples:
