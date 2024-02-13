@@ -84,26 +84,26 @@ if __name__ == "__main__":
       triples = torch.tensor(create_triples(relation), device="cpu")
       result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
 
-      if False:
+      batches_operation = True
+
+      if batches_operation:
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
-          torch.cuda.empty_cache()
-          batch_cuda = batch.to("cuda")
-          batch_preds = batch_results(solver, batch_cuda)
+          batch_preds = batch_results(solver, batch)
           #print("Batch_preds", batch_preds)
-          print("Dev. b atch preds", batch_preds.device)
           batch_size = batch_preds.size(0)
           result_tensor[index:index+batch_size] = batch_preds
           index += batch_size
           count +=1
         save_tensor(relation, result_tensor)
-        
-      for t in triples:
-        print("Triplet", t)
-        tensor_row = obtain_results(solver, t).unsqueeze(0).cpu()  # Unsqueezing to add a new dimension (to make it a row tensor)
-        result_tensor[index] = tensor_row
-        index += 1
-      save_tensor(relation, result_tensor)
+
+      else:
+        for t in triples:
+          print("Triplet", t)
+          tensor_row = obtain_results(solver, t).unsqueeze(0).cpu()  # Unsqueezing to add a new dimension (to make it a row tensor)
+          result_tensor[index] = tensor_row
+          index += 1
+        save_tensor(relation, result_tensor)
 
 
     
