@@ -43,13 +43,14 @@ def obtain_results(solver, triplet):
     #rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     #rankings = rankings.squeeze(0)
 
-    return torch.round(pred[0][0]).to(torch.float16)
+    #return torch.round(pred[0][0]).to(torch.float16)
 
 def batch_results(solver, batch):
     solver.model.eval()
     pred = solver.model.predict(batch)
   
-    return torch.round(pred[0][0]).to(torch.float16)
+    #return torch.round(pred[0][0]).to(torch.float16)
+    return pred[0][0]
 
 
 if __name__ == "__main__":
