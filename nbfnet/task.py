@@ -169,6 +169,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
                 # in case of GPU OOM
                 pred_cpu = pred.cpu()
                 del pred
+                del h_pred
             else:
                 pred = h_pred
                 pred_cpu = pred.cpu()
