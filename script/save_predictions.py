@@ -86,7 +86,7 @@ if __name__ == "__main__":
         torch.cuda.empty_cache()
         batch_preds = batch_results(solver, batch)
         batch_size = batch_preds.size(0)
-        result_tensor[index:index+batch_size] = batch_preds.cuda()
+        result_tensor[index:index+batch_size] = batch_preds
         index += batch_size
       save_tensor(relation, result_tensor)
         
