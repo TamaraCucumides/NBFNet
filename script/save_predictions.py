@@ -49,10 +49,11 @@ def batch_results(solver, batch):
     batch.to("cuda")
     solver.model.eval()
     pred = solver.model.predict(batch)
-    pred.to("cpu")
+    pred_cpu = pred.to("cpu")
+    del pred
   
     #return torch.round(pred[0][0]).to(torch.float16)
-    return pred[0][0]
+    return pred_cpu[0][0]
 
 
 if __name__ == "__main__":
@@ -86,7 +87,8 @@ if __name__ == "__main__":
 
       for batch in batch_tensors(triples, batch_size):
         torch.cuda.empty_cache()
-        batch_preds = batch_results(solver, batch)
+        batch_cuda = batch.to("cuda")
+        batch_preds = batch_results(solver, batch_cuda)
         batch_size = batch_preds.size(0)
         result_tensor[index:index+batch_size] = batch_preds
         index += batch_size
