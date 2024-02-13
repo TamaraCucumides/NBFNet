@@ -46,7 +46,7 @@ def obtain_results(solver, triplet):
     #return torch.round(pred[0][0]).to(torch.float16)
 
 def batch_results(solver, batch):
-    batch.to("gpu")
+    batch.to("cuda")
     solver.model.eval()
     pred = solver.model.predict(batch)
     pred.to("cpu")
