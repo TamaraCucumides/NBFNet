@@ -83,7 +83,7 @@ if __name__ == "__main__":
       result_tensor = torch.empty(0, 14541, dtype=torch.float16, device="cpu")
 
       for batch in batch_tensors(triples, batch_size):
-        batch.to("cude")
+        batch.to("cuda")
         torch.cuda.empty_cache()
         batch_preds = batch_results(solver, batch)
         batch_size = batch_preds.size(0)
