@@ -138,7 +138,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
         return all_loss, metric
 
-    def predict(self, batch, all_loss=None, metric=None, only_head=False):
+    def predict(self, batch, all_loss=None, metric=None, only_head=True):
         #print("Predict batch shape", batch.shape)
         #print("Batch", batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
