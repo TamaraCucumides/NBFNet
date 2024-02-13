@@ -62,7 +62,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         self.full_batch_eval = full_batch_eval
 
     def preprocess(self, train_set, valid_set, test_set):
-        print("Preprocess")
         if isinstance(train_set, torch_data.Subset):
             dataset = train_set.dataset
         else:
@@ -94,7 +93,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def forward(self, batch, all_loss=None, metric=None):
         """"""
-        print("forward")
         all_loss = torch.tensor(0, dtype=torch.float32, device=self.device)
         metric = {}
 
@@ -141,7 +139,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
     def predict(self, batch, all_loss=None, metric=None, only_head=True):
         # GPU OOM
         torch.cuda.empty_cache()
-
         
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
@@ -152,28 +149,22 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             t_preds = []
             h_preds = []
             num_negative = self.num_entity if self.full_batch_eval else self.num_negative
-            if not only_head:
-                for neg_index in all_index.split(num_negative):
-                    r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
-                    h_index, t_index = torch.meshgrid(pos_h_index, neg_index)
-                    t_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
-                    t_preds.append(t_pred)
-                t_pred = torch.cat(t_preds, dim=-1)
+            for neg_index in all_index.split(num_negative):
+                r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
+                h_index, t_index = torch.meshgrid(pos_h_index, neg_index)
+                t_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
+                t_preds.append(t_pred)
+            t_pred = torch.cat(t_preds, dim=-1)
             for neg_index in all_index.split(num_negative):
                 r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
                 t_index, h_index = torch.meshgrid(pos_t_index, neg_index)
                 h_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
-                h_cpu = h_pred.to("cpu")
-                h_preds.append(h_cpu)
+                h_preds.append(h_pred)
             h_pred = torch.cat(h_preds, dim=-1)
 
-            if not only_head:
-                pred = torch.stack([t_pred, h_pred], dim=1)
-                # in case of GPU OOM
-                pred_cpu = pred.to("cpu")
-            else:
-                pred = h_pred
-                pred_cpu = pred.to("cpu")
+            pred = torch.stack([t_pred, h_pred], dim=1)
+            # in case of GPU OOM
+            pred.cpu()
         else:
             # train
             if self.strict_negative:
@@ -187,7 +178,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
 
-        return pred_cpu
+        return pred
 
     def target(self, batch):
         # test target
