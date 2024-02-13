@@ -46,7 +46,6 @@ def obtain_results(solver, triplet):
     #return torch.round(pred[0][0]).to(torch.float16)
 
 def batch_results(solver, batch):
-    batch.to("cuda")
     solver.model.eval()
     pred = solver.model.predict(batch)
     pred_cpu = pred.to("cpu")
@@ -89,6 +88,7 @@ if __name__ == "__main__":
         torch.cuda.empty_cache()
         batch_cuda = batch.to("cuda")
         batch_preds = batch_results(solver, batch_cuda)
+        del batch_cuda
         batch_size = batch_preds.size(0)
         result_tensor[index:index+batch_size] = batch_preds
         index += batch_size
