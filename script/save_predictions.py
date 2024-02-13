@@ -50,8 +50,9 @@ def batch_results(solver, batch):
     pred = solver.model.predict(batch, only_head=True)
     pred_cpu = pred.to("cpu")
     del pred
+    del batch
     #return torch.round(pred[0][0]).to(torch.float16)
-    return pred_cpu[0]
+    return pred_cpu
 
 
 if __name__ == "__main__":
