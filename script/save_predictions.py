@@ -55,6 +55,7 @@ def batch_results(solver, batch):
 
 
 if __name__ == "__main__":
+    print("Torch version", torch.__version__)
     args, vars = util.parse_args()
     cfg = util.load_config(args.config, context=vars)
     working_dir = util.create_working_directory(cfg)
