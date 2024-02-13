@@ -47,7 +47,7 @@ def obtain_results(solver, triplet):
 
 def batch_results(solver, batch):
     solver.model.eval()
-    pred = solver.model.predict(batch)
+    pred = solver.model.predict(batch).to("cpu")
   
     #return torch.round(pred[0][0]).to(torch.float16)
     return pred[0][0]
@@ -79,10 +79,11 @@ if __name__ == "__main__":
       print("######################################")
       print("Relation", relation)
       index = 0
-      triples = torch.tensor(create_triples(relation), device=solver.device)
-      result_tensor = torch.empty(0, 14541, dtype=torch.float16, device=solver.device)
+      triples = torch.tensor(create_triples(relation), device="cpu")
+      result_tensor = torch.empty(0, 14541, dtype=torch.float16, device="cpu")
 
       for batch in batch_tensors(triples, batch_size):
+        batch.to("cude")
         torch.cuda.empty_cache()
         batch_preds = batch_results(solver, batch)
         batch_size = batch_preds.size(0)
