@@ -30,7 +30,7 @@ def create_triples(relation):
 
 def batch_tensors(tensor_list, batch_size):
     for i in range(0, len(tensor_list), batch_size):
-        yield torch.stack(tensor_list[i:i+batch_size], dim=0)
+        yield torch.cat(tensor_list[i:i+batch_size], dim=0)
 
 def obtain_results(solver, triplet):
     h, t, r = triplet
