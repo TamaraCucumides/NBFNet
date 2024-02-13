@@ -138,7 +138,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
         return all_loss, metric
 
-    def predict(self, batch, all_loss=None, metric=None):
+    def predict(self, batch, all_loss=None, metric=None, only_head=False):
         #print("Predict batch shape", batch.shape)
         #print("Batch", batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
@@ -150,21 +150,27 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             t_preds = []
             h_preds = []
             num_negative = self.num_entity if self.full_batch_eval else self.num_negative
-            for neg_index in all_index.split(num_negative):
-                r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
-                h_index, t_index = torch.meshgrid(pos_h_index, neg_index)
-                t_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
-                t_preds.append(t_pred)
-            t_pred = torch.cat(t_preds, dim=-1)
+            if not only_head:
+                for neg_index in all_index.split(num_negative):
+                    r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
+                    h_index, t_index = torch.meshgrid(pos_h_index, neg_index)
+                    t_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
+                    t_preds.append(t_pred)
+                t_pred = torch.cat(t_preds, dim=-1)
             for neg_index in all_index.split(num_negative):
                 r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
                 t_index, h_index = torch.meshgrid(pos_t_index, neg_index)
                 h_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
                 h_preds.append(h_pred)
             h_pred = torch.cat(h_preds, dim=-1)
-            pred = torch.stack([t_pred, h_pred], dim=1)
-            # in case of GPU OOM
-            pred = pred.cpu()
+
+            if not only_head:
+                pred = torch.stack([t_pred, h_pred], dim=1)
+                # in case of GPU OOM
+                pred = pred.cpu()
+            else:
+                pred = h_pred
+                pred = pred.cpu()
         else:
             # train
             if self.strict_negative:
