@@ -29,7 +29,7 @@ optimizer:
 
 engine:
   gpus: [0]
-  batch_size: 16
+  batch_size: 8
 
 checkpoint: {{ checkpoint }}
 
