@@ -84,6 +84,9 @@ def visualize_path(solver, triplet, entity_vocab, relation_vocab):
 if __name__ == "__main__":
     args, vars = util.parse_args()
     cfg = util.load_config(args.config, context=vars)
+
+    print(cfg)
+    return 
     working_dir = util.create_working_directory(cfg)
 
     torch.manual_seed(args.seed + comm.get_rank())
