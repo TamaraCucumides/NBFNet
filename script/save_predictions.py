@@ -47,12 +47,11 @@ def obtain_results(solver, triplet):
 
 def batch_results(solver, batch):
     solver.model.eval()
-    pred = solver.model.predict(batch)
+    pred = solver.model.predict(batch, only_head=True)
     pred_cpu = pred.to("cpu")
     del pred
-  
     #return torch.round(pred[0][0]).to(torch.float16)
-    return pred_cpu[0][0]
+    return pred_cpu[0]
 
 
 if __name__ == "__main__":
