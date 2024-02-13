@@ -28,6 +28,10 @@ def create_triples(relation):
     triples.append(t)
   return triples
 
+def batch_tensors(tensor_list, batch_size):
+    for i in range(0, len(tensor_list), batch_size):
+        yield torch.stack(tensor_list[i:i+batch_size])
+
 def obtain_results(solver, triplet):
     h, t, r = triplet
     triplet = torch.as_tensor([[h, t, r]], device=solver.device)
@@ -38,7 +42,13 @@ def obtain_results(solver, triplet):
     #rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     #rankings = rankings.squeeze(0)
 
-    return torch.round(pred[0][0] * 100).to(torch.int8)
+    return torch.round(pred[0][0]).to(torch.float16)
+
+def batch_results(solver, batch):
+    solver.model.eval()
+    pred = solver.model.predict(batch)
+  
+    return torch.round(pred[0][0] * 100).to(torch.float16)
 
 
 if __name__ == "__main__":
@@ -61,17 +71,27 @@ if __name__ == "__main__":
     # print output to the console
     print("Current directory", current_working_directory)
 
+    batch_size = cfg.engine.batch_size
+
     for relation in range(4):
-      triples = create_triples(relation)
-      result_tensor = torch.empty(0, 14541, dtype=torch.int8, device=solver.device)
-      print("Result tensor shape", result_tensor.shape)
-      print(result_tensor)
-      for t in triples:
-        tensor_row = obtain_results(solver, t).unsqueeze(0)  # Unsqueezing to add a new dimension (to make it a row tensor)
-        print("Tensor row shape", tensor_row.shape)
-        print(tensor_row)
-        result_tensor = torch.cat((result_tensor, tensor_row.cuda()), dim=0)
+      print("######################################")
+      print("Relation", relation)
+      triples = torch.tensor(create_triples(relation), device=solver.device)
+      result_tensor = torch.empty(0, 14541, dtype=torch.float16, device=solver.device)
+
+      for batch in batch_tensors(triples, batch_size):
+        batch_results = batch_results(solver, batch)
+        batch_size = len(batch_results)
+        result_tensor[index:index+batch_size] = batch_results.cuda()
+        index += batch_size
       save_tensor(relation, result_tensor)
+        
+      #for t in triples:
+      #  tensor_row = obtain_results(solver, t).unsqueeze(0)  # Unsqueezing to add a new dimension (to make it a row tensor)
+      #  print("Tensor row shape", tensor_row.shape)
+      #  print(tensor_row)
+      #  result_tensor = torch.cat((result_tensor, tensor_row.cuda()), dim=0)
+      #wisave_tensor(relation, result_tensor)
 
 
     
