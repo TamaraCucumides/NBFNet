@@ -136,7 +136,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
         return all_loss, metric
 
-    def predict(self, batch, all_loss=None, metric=None, only_head=True):
+    def predict(self, batch, all_loss=None, metric=None):
         # GPU OOM
         torch.cuda.empty_cache()
         
