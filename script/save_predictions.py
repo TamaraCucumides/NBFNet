@@ -10,7 +10,7 @@ from torchdrug.utils import comm
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from nbfnet import dataset, layer, model, task, util
 
-def save_tensor(relation, preds, folder="data"):
+def save_tensor(relation, preds, folder="../data"):
   """receives the relation number, alongside with the tensor with all predictions 
   and saves it into the respective .pt"""
 
