@@ -82,9 +82,9 @@ if __name__ == "__main__":
       result_tensor = torch.empty(0, 14541, dtype=torch.float16, device=solver.device)
 
       for batch in batch_tensors(triples, batch_size):
-        batch_results = batch_results(solver, batch)
-        batch_size = batch_results.size(0)
-        result_tensor[index:index+batch_size] = batch_results.cuda()
+        batch_preds = batch_results(solver, batch)
+        batch_size = batch_preds.size(0)
+        result_tensor[index:index+batch_size] = batch_preds.cuda()
         index += batch_size
       save_tensor(relation, result_tensor)
         
