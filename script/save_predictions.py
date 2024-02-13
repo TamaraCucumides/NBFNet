@@ -82,6 +82,7 @@ if __name__ == "__main__":
       result_tensor = torch.empty(0, 14541, dtype=torch.float16, device=solver.device)
 
       for batch in batch_tensors(triples, batch_size):
+        torch.cuda.empty_cache()
         batch_preds = batch_results(solver, batch)
         batch_size = batch_preds.size(0)
         result_tensor[index:index+batch_size] = batch_preds.cuda()
