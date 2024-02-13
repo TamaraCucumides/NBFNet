@@ -77,6 +77,7 @@ if __name__ == "__main__":
       batch_size = cfg.engine.batch_size
       print("######################################")
       print("Relation", relation)
+      index = 0
       triples = torch.tensor(create_triples(relation), device=solver.device)
       result_tensor = torch.empty(0, 14541, dtype=torch.float16, device=solver.device)
 
