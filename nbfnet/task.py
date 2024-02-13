@@ -161,7 +161,9 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
                 r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
                 t_index, h_index = torch.meshgrid(pos_t_index, neg_index)
                 h_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
-                h_preds.append(h_pred)
+                h_cpu = h_pred.to("cpu")
+                del h_pred
+                h_preds.append(h_cpu)
             h_pred = torch.cat(h_preds, dim=-1)
 
             if not only_head:
