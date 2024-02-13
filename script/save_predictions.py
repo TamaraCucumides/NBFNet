@@ -31,7 +31,7 @@ def create_triples(relation):
 def batch_tensors(tensor, batch_size):
     num_batches = (tensor.size(0) + batch_size - 1) // batch_size
     for i in range(0, tensor.size(0), batch_size):
-        yield tensor[i:i+batch_size]
+        yield tensor[i:min(i+batch_size, tensor.size(0))]
 
 def obtain_results(solver, triplet):
     h, t, r = triplet
@@ -72,9 +72,9 @@ if __name__ == "__main__":
     # print output to the console
     print("Current directory", current_working_directory)
 
-    batch_size = cfg.engine.batch_size
 
     for relation in range(4):
+      batch_size = cfg.engine.batch_size
       print("######################################")
       print("Relation", relation)
       triples = torch.tensor(create_triples(relation), device=solver.device)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
       for batch in batch_tensors(triples, batch_size):
         batch_results = batch_results(solver, batch)
-        batch_size = len(batch_results)
+        batch_size = batch_results.size(0)
         result_tensor[index:index+batch_size] = batch_results.cuda()
         index += batch_size
       save_tensor(relation, result_tensor)
