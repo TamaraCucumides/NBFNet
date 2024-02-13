@@ -162,20 +162,16 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
                 t_index, h_index = torch.meshgrid(pos_t_index, neg_index)
                 h_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
                 h_cpu = h_pred.to("cpu")
-                del h_pred
                 h_preds.append(h_cpu)
             h_pred = torch.cat(h_preds, dim=-1)
 
             if not only_head:
                 pred = torch.stack([t_pred, h_pred], dim=1)
                 # in case of GPU OOM
-                pred_cpu = pred.cpu()
-                del pred
-                del h_pred
+                pred_cpu = pred.to("cpu")
             else:
                 pred = h_pred
-                pred_cpu = pred.cpu()
-                del pred
+                pred_cpu = pred.to("cpu")
         else:
             # train
             if self.strict_negative:
