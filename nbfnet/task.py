@@ -167,10 +167,12 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             if not only_head:
                 pred = torch.stack([t_pred, h_pred], dim=1)
                 # in case of GPU OOM
-                pred = pred.cpu()
+                pred_cpu = pred.cpu()
+                del pred
             else:
                 pred = h_pred
-                pred = pred.cpu()
+                pred_cpu = pred.cpu()
+                del pred
         else:
             # train
             if self.strict_negative:
@@ -184,7 +186,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
 
-        return pred
+        return pred_cpu
 
     def target(self, batch):
         # test target
