@@ -51,7 +51,7 @@ def batch_results(solver, batch):
     #pred, (mask, target) = solver.model.predict_and_target(batch)
     pred_cpu = pred.to("cpu")
     #return torch.round(pred[0][0]).to(torch.float16)
-    return pred_cpu
+    return pred_cpu[0]
 
 
 if __name__ == "__main__":
