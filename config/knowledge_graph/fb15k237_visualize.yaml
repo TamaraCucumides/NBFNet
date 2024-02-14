@@ -28,8 +28,8 @@ optimizer:
   lr: 5.0e-3
 
 engine:
-  gpus: [0]
-  batch_size: 6
+  gpus: {{ gpus }}
+  batch_size: 12
 
 checkpoint: {{ checkpoint }}
 
