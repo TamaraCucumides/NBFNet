@@ -138,7 +138,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def predict(self, batch, all_loss=None, metric=None):
         # GPU OOM
-        torch.cuda.empty_cache()
         
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
