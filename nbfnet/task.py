@@ -137,6 +137,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return all_loss, metric
 
     def predict(self, batch, all_loss=None, metric=None):
+        print("Predict batch device", batch.device)
         # GPU OOM
         
         pos_h_index, pos_t_index, pos_r_index = batch.t()
