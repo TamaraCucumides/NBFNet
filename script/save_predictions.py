@@ -76,7 +76,7 @@ if __name__ == "__main__":
     print("Current directory", current_working_directory)
 
 
-    for relation in range(4):
+    for relation in range(10):
       batch_size = cfg.engine.batch_size
       print("######################################")
       print("Relation", relation)
