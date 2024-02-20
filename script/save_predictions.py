@@ -101,18 +101,18 @@ if __name__ == "__main__":
       print("Relation", relation)
       index = 0
       count = 0
-      triples = torch.tensor(create_triples(relation), device="cpu")
+      num_triples = 3
+      triples = torch.tensor(create_triples(relation, num_triples), device="cpu")
       result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
 
       batches_operation = True
-      num_triples = 3
 
       print("Cuda memory before starting predicting", torch.cuda.memory_allocated())
 
       if batches_operation:
         save_tensor("-1", result_tensor)
         solver.model.eval()
-        for batch in batch_tensors(triples, batch_size, num_triples):
+        for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
           pred = batch_evaluate(solver, batch)
           print(pred)
