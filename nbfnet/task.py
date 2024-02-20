@@ -178,6 +178,8 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
 
+        print("End prediction")
+
         return pred
 
     def target(self, batch):
