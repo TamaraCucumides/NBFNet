@@ -95,6 +95,16 @@ if __name__ == "__main__":
       print("Cuda memory before starting predicting", torch.cuda.memory_allocated())
 
       if batches_operation:
+        solver.model.eval()
+        for batch in batch_tensors(triples, batch_size):
+          print("Numero batch", count)
+          pred, target = model.predict_and_target(batch)
+          print(pred)
+          print(target)
+          print("Cuda memory after batch", count, torch.cuda.memory_allocated())
+      
+
+      elif batches_operation:
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
           batch_preds = batch_results(solver, batch)
