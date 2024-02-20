@@ -79,7 +79,7 @@ if __name__ == "__main__":
     print("Current directory", current_working_directory)
 
 
-    for relation in range(10):
+    for relation in range(2):
       batch_size = cfg.engine.batch_size
       print("######################################")
       print("Relation", relation)
@@ -93,9 +93,8 @@ if __name__ == "__main__":
       if batches_operation:
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
-          
           batch_preds = batch_results(solver, batch)
-          #print("Batch_preds", batch_preds)
+          print("Batch_preds", batch_preds)
           batch_size = batch_preds.size(0)
           result_tensor[index:index+batch_size] = batch_preds
           index += batch_size
