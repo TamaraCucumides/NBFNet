@@ -19,11 +19,11 @@ def save_tensor(relation, preds, folder="../data"):
     pred_filename = os.path.join(folder, f'{relation}.pt')
     torch.save(preds, pred_filename)
 
-def create_triples(relation):
+def create_triples(relation, num_triples):
   """Create all the relevant triples"""
 
   triples = [] 
-  for i in range(14541):
+  for i in range(num_triples):
     t = [i, relation, 1]
     triples.append(t)
   return triples
@@ -105,13 +105,14 @@ if __name__ == "__main__":
       result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
 
       batches_operation = True
+      num_triples = 14541
 
       print("Cuda memory before starting predicting", torch.cuda.memory_allocated())
 
       if batches_operation:
         save_tensor("-1", result_tensor)
         solver.model.eval()
-        for batch in batch_tensors(triples, batch_size):
+        for batch in batch_tensors(triples, batch_size, num_triples):
           print("Numero batch", count)
           pred = batch_evaluate(solver, batch)
           print(pred)
