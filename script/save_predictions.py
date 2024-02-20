@@ -47,9 +47,11 @@ def obtain_results(solver, triplet):
 
 def batch_results(solver, batch):
     solver.model.eval()
-    pred = solver.model.predict(batch)
+    batch_gpu = batch.to("cuda")
+    pred = solver.model.predict(batch_gpu)
     #pred, (mask, target) = solver.model.predict_and_target(batch)
     pred_cpu = pred.to("cpu")
+    del pred
     #return torch.round(pred[0][0]).to(torch.float16)
     return pred_cpu[0]
 
@@ -90,6 +92,7 @@ if __name__ == "__main__":
       if batches_operation:
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
+          
           batch_preds = batch_results(solver, batch)
           #print("Batch_preds", batch_preds)
           batch_size = batch_preds.size(0)
