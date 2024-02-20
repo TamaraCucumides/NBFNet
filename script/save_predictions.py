@@ -72,6 +72,8 @@ if __name__ == "__main__":
     dataset = core.Configurable.load_config_dict(cfg.dataset)
     solver = util.build_solver(cfg, dataset)
 
+    print("Cuda memory after building solver", torch.cuda.memory_allocated())
+
     # get the current working directory
     current_working_directory = os.getcwd()
 
@@ -90,6 +92,8 @@ if __name__ == "__main__":
 
       batches_operation = True
 
+      print("Cuda memory before starting predicting", torch.cuda.memory_allocated())
+
       if batches_operation:
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
@@ -99,6 +103,7 @@ if __name__ == "__main__":
           result_tensor[index:index+batch_size] = batch_preds
           index += batch_size
           count +=1
+          print("Cuda memory after batch", count, torch.cuda.memory_allocated())
         save_tensor(relation, result_tensor)
 
       else:
