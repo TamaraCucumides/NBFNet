@@ -116,7 +116,7 @@ if __name__ == "__main__":
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
           pred = batch_evaluate(solver, batch)
-          print(pred)
+          #print(pred)
           print("Cuda memory after batch", count, torch.cuda.memory_allocated())
           count += 1
         save_tensor(relation, result_tensor)
