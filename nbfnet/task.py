@@ -137,39 +137,30 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return all_loss, metric
 
     def predict(self, batch, all_loss=None, metric=None):
-        print("Predict batch device", batch.device)
-        # GPU OOM
-        
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
 
         if all_loss is None:
-            print("all_loss is None")
             # test
             all_index = torch.arange(self.num_entity, device=self.device)
             t_preds = []
             h_preds = []
             num_negative = self.num_entity if self.full_batch_eval else self.num_negative
-            print("Before the for")
             for neg_index in all_index.split(num_negative):
                 r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
                 h_index, t_index = torch.meshgrid(pos_h_index, neg_index)
                 t_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
                 t_preds.append(t_pred)
-            print("After first for loop")
             t_pred = torch.cat(t_preds, dim=-1)
-            
             for neg_index in all_index.split(num_negative):
                 r_index = pos_r_index.unsqueeze(-1).expand(-1, len(neg_index))
                 t_index, h_index = torch.meshgrid(pos_t_index, neg_index)
                 h_pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
                 h_preds.append(h_pred)
-            print("After second for loop")
             h_pred = torch.cat(h_preds, dim=-1)
-
             pred = torch.stack([t_pred, h_pred], dim=1)
             # in case of GPU OOM
-            pred.cpu()
+            pred = pred.cpu()
         else:
             # train
             if self.strict_negative:
@@ -182,8 +173,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
             t_index[:batch_size // 2, 1:] = neg_index[:batch_size // 2]
             h_index[batch_size // 2:, 1:] = neg_index[batch_size // 2:]
             pred = self.model(self.fact_graph, h_index, t_index, r_index, all_loss=all_loss, metric=metric)
-
-        print("End prediction")
 
         return pred
 
