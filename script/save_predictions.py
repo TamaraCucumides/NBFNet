@@ -56,6 +56,20 @@ def batch_results(solver, batch):
     #return torch.round(pred[0][0]).to(torch.float16)
     return pred_cpu[0]
 
+@torch.no_grad()
+def batch_evaluate(solver, batch):
+  batch = batch.to("cuda")
+  pred, target = solver.model.predict_and_target(batch)
+
+  pred_cpu = pred.cpu()
+  target_cpu = target.cpu()
+
+  del pred
+  del target
+  
+  return pred_cpu, target_cpu
+  
+
 
 if __name__ == "__main__":
     print("Torch version", torch.__version__)
