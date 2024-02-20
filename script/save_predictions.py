@@ -17,8 +17,8 @@ def save_tensor(relation, preds, folder="../data"):
   print("Saving relation", relation)
   if not os.path.exists(folder):
     os.makedirs(folder)
-    pred_filename = os.path.join(folder, f'{relation}.pt')
-    torch.save(preds, pred_filename)
+  pred_filename = os.path.join(folder, f'{relation}.pt')
+  torch.save(preds, pred_filename)
 
 def create_triples(relation, num_triples):
   """Create all the relevant triples"""
