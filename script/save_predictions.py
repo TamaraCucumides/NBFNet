@@ -105,7 +105,7 @@ if __name__ == "__main__":
       result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
 
       batches_operation = True
-      num_triples = 14541
+      num_triples = 3
 
       print("Cuda memory before starting predicting", torch.cuda.memory_allocated())
 
@@ -117,6 +117,7 @@ if __name__ == "__main__":
           pred = batch_evaluate(solver, batch)
           print(pred)
           print("Cuda memory after batch", count, torch.cuda.memory_allocated())
+        save_tensor(relation, result_tensor)
       
 
       elif batches_operation:
