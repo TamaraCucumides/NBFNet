@@ -49,6 +49,7 @@ def batch_results(solver, batch):
     solver.model.eval()
     batch_gpu = batch.to("cuda")
     pred = solver.model.predict(batch_gpu)
+    print("*")
     #pred, (mask, target) = solver.model.predict_and_target(batch)
     pred_cpu = pred.to("cpu")
     del pred
