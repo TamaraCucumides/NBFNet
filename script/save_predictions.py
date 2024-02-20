@@ -14,6 +14,7 @@ def save_tensor(relation, preds, folder="../data"):
   """receives the relation number, alongside with the tensor with all predictions 
   and saves it into the respective .pt"""
 
+  print("Saving relation", relation)
   if not os.path.exists(folder):
     os.makedirs(folder)
     pred_filename = os.path.join(folder, f'{relation}.pt')
