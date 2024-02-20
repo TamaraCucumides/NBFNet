@@ -144,6 +144,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         batch_size = len(batch)
 
         if all_loss is None:
+            print("all_loss is None")
             # test
             all_index = torch.arange(self.num_entity, device=self.device)
             t_preds = []
