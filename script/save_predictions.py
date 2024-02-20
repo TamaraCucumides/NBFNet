@@ -101,7 +101,7 @@ if __name__ == "__main__":
       print("Relation", relation)
       index = 0
       count = 0
-      num_triples = 3
+      num_triples = 100
       triples = torch.tensor(create_triples(relation, num_triples), device="cpu")
       result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
 
