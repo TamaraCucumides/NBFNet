@@ -62,12 +62,12 @@ def batch_evaluate(solver, batch):
   pred, target = solver.model.predict_and_target(batch)
 
   pred_cpu = pred.cpu()
-  target_cpu = target.cpu()
+  #target_cpu = target.cpu()
 
   del pred
   del target
   
-  return pred_cpu, target_cpu
+  return pred_cpu
   
 
 
