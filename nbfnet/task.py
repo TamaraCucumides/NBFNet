@@ -140,6 +140,8 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def predict(self, batch, all_loss=None, metric=None):
         print("predict")
+        print("batch shape", batch.shape)
+        print(batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
 
