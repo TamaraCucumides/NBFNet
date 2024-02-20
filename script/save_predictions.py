@@ -112,9 +112,8 @@ if __name__ == "__main__":
         solver.model.eval()
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
-          pred, target = batch_evaluate(solver, batch)
+          pred = batch_evaluate(solver, batch)
           print(pred)
-          print(target)
           print("Cuda memory after batch", count, torch.cuda.memory_allocated())
       
 
