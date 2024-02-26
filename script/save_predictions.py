@@ -18,7 +18,9 @@ def save_tensor(relation, preds, folder="../data"):
   if not os.path.exists(folder):
     os.makedirs(folder)
   pred_filename = os.path.join(folder, f'{relation}.pt')
-  torch.save(preds, pred_filename)
+
+  preds_save = torch.sigmoid(preds).half()
+  torch.save(preds_save, pred_filename)
 
 def create_triples(relation, num_triples):
   """Create all the relevant triples"""
@@ -104,7 +106,7 @@ if __name__ == "__main__":
       count = 0
       num_triples = 14541
       triples = torch.tensor(create_triples(relation, num_triples), device="cpu")
-      result_tensor = torch.empty(14541, 14541, dtype=torch.float16, device="cpu")
+      result_tensor = torch.empty(14541, 14541, device="cpu")
 
       batches_operation = True
 
