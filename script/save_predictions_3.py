@@ -57,7 +57,7 @@ def batch_results(solver, batch):
     pred_cpu = pred.to("cpu")
     del pred
     #return torch.round(pred[0][0]).to(torch.float16)
-    return pred_cpu[0]
+    return pred_cpu[:, 0, :]
 
 @torch.no_grad()
 def batch_evaluate(solver, batch):
@@ -69,10 +69,8 @@ def batch_evaluate(solver, batch):
 
   del pred
   del target
-
-  print("Predictions", pred_cpu)
   
-  return pred_cpu[0]
+  return pred_cpu[:, 0, :]
   
 
 
@@ -100,9 +98,8 @@ if __name__ == "__main__":
     print("Current directory", current_working_directory)
 
 
-    #for r in range(77):
-    for relation in [235,236]:
-      #relation = r + 160
+    for r in range(1):
+      relation = r + 160
       batch_size = cfg.engine.batch_size
       print("######################################")
       print("Relation", relation)
