@@ -227,8 +227,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("Maximum value:", max_value.item())
         quartiles = torch.quantile(sampled_data, torch.tensor([0.25, 0.5, 0.75]))
 
-        print("Minimum value:", min_value.item())
-        print("Maximum value:", max_value.item())
         print("25th percentile:", quartiles[0].item())
         print("50th percentile (median):", quartiles[1].item())
         print("75th percentile:", quartiles[2].item())
