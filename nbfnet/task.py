@@ -94,7 +94,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def forward(self, batch, all_loss=None, metric=None):
         """"""
-        print("forward")
+        #print("forward")
         all_loss = torch.tensor(0, dtype=torch.float32, device=self.device)
         metric = {}
 
@@ -182,7 +182,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return pred
 
     def target(self, batch):
-        print("target")
+        #print("target")
         # test target
         batch_size = len(batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
@@ -212,6 +212,10 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("evaluate")
         mask, target = target
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
+
+        print("Predicciones")
+        print(pred)
+        
         if self.filtered_ranking:
             ranking = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
         else:
