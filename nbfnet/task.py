@@ -216,7 +216,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("Predicciones")
         print(pred)
 
-        sample_size = 1000  # You can adjust the sample size based on your memory constraints
+        sample_size = 500  # You can adjust the sample size based on your memory constraints
         sample_indices = torch.randint(0, pred.size(0), (sample_size,))
         sampled_data = pred[sample_indices].cpu()
 
