@@ -57,6 +57,7 @@ def batch_results(solver, batch):
     pred_cpu = pred.to("cpu")
     del pred
     #return torch.round(pred[0][0]).to(torch.float16)
+    print("Predictions", pred_cpu)
     return pred_cpu[0]
 
 @torch.no_grad()
@@ -121,7 +122,8 @@ if __name__ == "__main__":
           result_tensor[index:index+batch_size] = pred
           index += batch_size
           count +=1
-        save_tensor(relation, result_tensor)
+          print(result_tensor)
+        #save_tensor(relation, result_tensor)
       
 
       elif batches_operation:
