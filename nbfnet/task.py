@@ -218,7 +218,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
         sample_size = 1000  # You can adjust the sample size based on your memory constraints
         sample_indices = torch.randint(0, pred.size(0), (sample_size,))
-        sampled_data = pred[sample_indices]
+        sampled_data = pred[sample_indices].cpu()
 
         # Calculate min, max, and quartiles on the sampled data
         min_value = torch.min(sampled_data)
@@ -336,8 +336,6 @@ class KnowledgeGraphCompletionExt(tasks.KnowledgeGraphCompletion, core.Configura
     def evaluate(self, pred, target):
         print("Graph completion, evaluate")
         mask, target, relation = target
-
-        save_results()
 
         #print("mask shape", mask.shape)
         #print(mask)
