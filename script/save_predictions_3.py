@@ -57,7 +57,6 @@ def batch_results(solver, batch):
     pred_cpu = pred.to("cpu")
     del pred
     #return torch.round(pred[0][0]).to(torch.float16)
-    print("Predictions", pred_cpu)
     return pred_cpu[0]
 
 @torch.no_grad()
@@ -70,6 +69,8 @@ def batch_evaluate(solver, batch):
 
   del pred
   del target
+
+  print("Predictions", pred_cpu)
   
   return pred_cpu[0]
   
