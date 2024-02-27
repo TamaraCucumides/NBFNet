@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
 
     #for r in range(77):
-    for relation in [235,236]
+    for relation in [235,236]:
       #relation = r + 160
       batch_size = cfg.engine.batch_size
       print("######################################")
