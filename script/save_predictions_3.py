@@ -116,9 +116,11 @@ if __name__ == "__main__":
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
           pred = batch_evaluate(solver, batch)
-          batch_size = pred.size(0)
-          result_tensor[index:index+batch_size] = pred
-          index += batch_size
+          print("Predicciones (shape) luego del batch_evaluate", pred.shape)
+          batch_actual_size = pred.size(0)
+          print("batch actual size", batch_actual_size)
+          result_tensor[index:index+batch_actual_size] = pred
+          index += batch_actual_size
           count +=1
           print(result_tensor)
         #save_tensor(relation, result_tensor)
