@@ -115,10 +115,12 @@ if __name__ == "__main__":
         solver.model.eval()
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
+          print("Index =", index)
           pred = batch_evaluate(solver, batch)
           print("Predicciones (shape) luego del batch_evaluate", pred.shape)
           batch_actual_size = pred.size(0)
           print("batch actual size", batch_actual_size)
+          print("index + batch_actual_size")
           result_tensor[index:index+batch_actual_size] = pred
           index += batch_actual_size
           count +=1
