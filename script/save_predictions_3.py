@@ -125,7 +125,7 @@ if __name__ == "__main__":
           index += batch_actual_size
           count +=1
           print(result_tensor)
-        #save_tensor(relation, result_tensor)
+        save_tensor(relation, result_tensor)
       
 
       elif batches_operation:
