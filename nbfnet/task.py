@@ -212,24 +212,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         print("evaluate")
         mask, target = target
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
-
-        print("Predicciones")
-        print(pred)
-
-        sample_size = 500  # You can adjust the sample size based on your memory constraints
-        sample_indices = torch.randint(0, pred.size(0), (sample_size,))
-        sampled_data = pred[sample_indices].cpu()
-
-        # Calculate min, max, and quartiles on the sampled data
-        min_value = torch.min(sampled_data)
-        max_value = torch.max(sampled_data)
-        print("Minimum value:", min_value.item())
-        print("Maximum value:", max_value.item())
-        quartiles = torch.quantile(sampled_data, torch.tensor([0.25, 0.5, 0.75]))
-
-        print("25th percentile:", quartiles[0].item())
-        print("50th percentile (median):", quartiles[1].item())
-        print("75th percentile:", quartiles[2].item())
         
         if self.filtered_ranking:
             ranking = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
