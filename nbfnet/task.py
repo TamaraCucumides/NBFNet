@@ -62,7 +62,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         self.full_batch_eval = full_batch_eval
 
     def preprocess(self, train_set, valid_set, test_set):
-        print("preprocess")
         if isinstance(train_set, torch_data.Subset):
             dataset = train_set.dataset
         else:
@@ -139,9 +138,6 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
         return all_loss, metric
 
     def predict(self, batch, all_loss=None, metric=None):
-        print("predict")
-        print("batch shape", batch.shape)
-        print(batch)
         pos_h_index, pos_t_index, pos_r_index = batch.t()
         batch_size = len(batch)
 
@@ -210,6 +206,7 @@ class KnowledgeGraphCompletion(tasks.Task, core.Configurable):
 
     def evaluate(self, pred, target):
         print("evaluate")
+        print("pred shape", pred.shape)
         mask, target = target
         pos_pred = pred.gather(-1, target.unsqueeze(-1))
         
