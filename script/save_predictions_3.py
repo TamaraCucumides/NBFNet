@@ -27,7 +27,7 @@ def create_triples(relation, num_triples):
 
   triples = [] 
   for i in range(num_triples):
-    t = [i, relation, 1]
+    t = [i, 1, relation]
     triples.append(t)
   return triples
 
