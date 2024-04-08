@@ -84,6 +84,8 @@ if __name__ == "__main__":
 
     entity_vocab, relation_vocab = load_vocab(dataset)
 
+    num_relation = len(relation_vocab)
+
     for i in range(10):
       triplet = solver.test_set[i]
       h, t, r = triplet.tolist()
