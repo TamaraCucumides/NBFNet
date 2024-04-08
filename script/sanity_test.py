@@ -76,8 +76,8 @@ if __name__ == "__main__":
     logger.warning("Config file: %s" % args.config)
     logger.warning(pprint.pformat(cfg))
 
-    if cfg.dataset["class"] != "FB15k237":
-        raise ValueError("Visualization is only implemented for FB15k237")
+    #if cfg.dataset["class"] != "FB15k237":
+    #    raise ValueError("Visualization is only implemented for FB15k237")
 
     dataset = core.Configurable.load_config_dict(cfg.dataset)
     solver = util.build_solver(cfg, dataset)
