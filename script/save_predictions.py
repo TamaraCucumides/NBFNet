@@ -62,7 +62,7 @@ def batch_results(solver, batch):
 @torch.no_grad()
 def batch_evaluate(solver, batch):
   batch = batch.to("cuda")
-  pred, target = solver.model.predict_and_target(batch)
+  pred, (mask, target) = solver.model.predict_and_target(batch)
 
   pred_cpu = pred.cpu()
   #target_cpu = target.cpu()
