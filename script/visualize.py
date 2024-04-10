@@ -46,8 +46,10 @@ def visualize_path(solver, triplet, entity_vocab, relation_vocab):
     print("pred", pred)
     print("mask", mask)
     print("target", target)
-    
+
+    # pos pred es la prediccion para el target que me interesa (para el triple relevante)
     pos_pred = pred.gather(-1, target.unsqueeze(-1))
+    # cuento cuantos tienen un valor mas alto que esto, maskeando fuera los otros triples que tb son parte de, sumo 1 en caso que nadie sea mas grande q yo. 
     rankings = torch.sum((pos_pred <= pred) & mask, dim=-1) + 1
     rankings = rankings.squeeze(0)
 
