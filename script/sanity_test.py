@@ -91,16 +91,15 @@ if __name__ == "__main__":
         triplet = solver.test_set[0]
         h, t, r = triplet.tolist()
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
-        inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
+
+        print("h", h)
+        print("t", t)
+
 
         pred, (mask, target) = solver.model.predict_and_target(triplet)
-        pred_inv, (mask_inv, target_inv) = solver.model.predict_and_target(inverse)
 
-        print(pred[0])
-        print(pred[1])
-        
-        print(pred_inv[0])
-        print(pred_ind[1])
+        print("pred[0][t]", pred[0][t])
+        print("pred[1][h]", pred[1][h])
 
     # Correspondance of entities and relations
     if False:
