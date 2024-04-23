@@ -85,25 +85,49 @@ if __name__ == "__main__":
     entity_vocab, relation_vocab = load_vocab(dataset)
 
     num_relation = len(relation_vocab)
-    
-    for i in range(10):
-        triplet = solver.test_set[i]
+
+    #Symmetry of predictions 
+    if True:
+        triplet = solver.test_set[0]
         h, t, r = triplet.tolist()
-        print(h,t,r)
-        h_name = entity_vocab[h]
-        t_name = entity_vocab[t]
-        r_name = relation_vocab[r % num_relation]
-        print(h_name, t_name, r_name)
-        h, t, r = triplet.tolist()
-        
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
         inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
-        solver.model.eval()
+
         pred, (mask, target) = solver.model.predict_and_target(triplet)
+        pred_inv, (mask_inv, target_inv) = solver.model.predict_and_target(inverse)
 
-        print("De la columna 5 a 10 [5:10]")
+        print(pred)
+        print(pred_inv)
 
-        print("pred[5:10]", pred[5:10])
-        print("mask", mask)
-        print("target", target)
+    # Correspondance of entities and relations
+    if False:
+        for i in range(10):
+            triplet = solver.test_set[i]
+            h, t, r = triplet.tolist()
+            print(h,t,r)
+            h_name = entity_vocab[h]
+            t_name = entity_vocab[t]
+            r_name = relation_vocab[r % num_relation]
+            print(h_name, t_name, r_name)
+            h, t, r = triplet.tolist()
+            
+            triplet = torch.as_tensor([[h, t, r]], device=solver.device)
+            inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
+            solver.model.eval()
+            pred, (mask, target) = solver.model.predict_and_target(triplet)
+    
+            print("De la columna 5 a 10 [5:10]")
+    
+            print("pred[5:10]", pred[5:10])
+            print("mask", mask)
+            print("target", target)
+
+    # Evaluate a couple of 1p queries
+    if False:
+        pass
+        # Hard-code some "queries" from the sample
+        # Evaluate them using the builtin method
+        # Report MRR
+
+    
       
