@@ -96,8 +96,11 @@ if __name__ == "__main__":
         pred, (mask, target) = solver.model.predict_and_target(triplet)
         pred_inv, (mask_inv, target_inv) = solver.model.predict_and_target(inverse)
 
-        print(pred)
-        print(pred_inv)
+        print(pred[0])
+        print(pred[1])
+        
+        print(pred_inv[0])
+        print(pred_ind[1])
 
     # Correspondance of entities and relations
     if False:
