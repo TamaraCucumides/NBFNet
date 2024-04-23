@@ -89,7 +89,7 @@ if __name__ == "__main__":
     #Symmetry of predictions 
     if True:
         for i in range(5):
-            triplet = solver.test_set[0]
+            triplet = solver.test_set[i]
             h, t, r = triplet.tolist()
             triplet = torch.as_tensor([[h, t, r]], device=solver.device)
     
