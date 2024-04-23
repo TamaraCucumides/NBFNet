@@ -88,18 +88,19 @@ if __name__ == "__main__":
 
     #Symmetry of predictions 
     if True:
-        triplet = solver.test_set[0]
-        h, t, r = triplet.tolist()
-        triplet = torch.as_tensor([[h, t, r]], device=solver.device)
-
-        print("h", h)
-        print("t", t)
-
-
-        pred, (mask, target) = solver.model.predict_and_target(triplet)
-
-        print("pred[0][t]", pred[0][0][t])
-        print("pred[1][h]", pred[0][1][h])
+        for i in range(5):
+            triplet = solver.test_set[0]
+            h, t, r = triplet.tolist()
+            triplet = torch.as_tensor([[h, t, r]], device=solver.device)
+    
+            print("h", h)
+            print("t", t)
+    
+    
+            pred, (mask, target) = solver.model.predict_and_target(triplet)
+    
+            print("pred[0][t]", pred[0][0][t])
+            print("pred[1][h]", pred[0][1][h])
 
     # Correspondance of entities and relations
     if False:
