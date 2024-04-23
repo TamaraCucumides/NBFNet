@@ -98,8 +98,8 @@ if __name__ == "__main__":
 
         pred, (mask, target) = solver.model.predict_and_target(triplet)
 
-        print("pred[0][t]", pred[0][t])
-        print("pred[1][h]", pred[1][h])
+        print("pred[0][t]", pred[0][0][t])
+        print("pred[1][h]", pred[0][1][h])
 
     # Correspondance of entities and relations
     if False:
