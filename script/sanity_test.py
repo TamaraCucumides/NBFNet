@@ -126,7 +126,7 @@ if __name__ == "__main__":
             print("target", target)
 
     # Evaluate a couple of 1p queries
-    if True:
+    if False:
         triplet = torch.as_tensor([[927, 160, 202]], device=solver.device)
         solver.model.eval()
         pred, (mask, target) = solver.model.predict_and_target(triplet)
@@ -134,22 +134,19 @@ if __name__ == "__main__":
         print("pred[0][0]", pred[0][0])
         print("pred[0][1]", pred[0][1])
 
-        print("mask", mask, mask.shape)
-        print("target", target, target.shape)
-
         print("Easy answers")
         for i in [160,259,1800,2370,2736,3730,5341,7940,8644]:
             print("Preds")
             print(i, pred[0][0][i])
             print("Mask")
-            print(mask)
+            print(mask[0][0][i])
             
         print("Hard answers")
         for i in [3232]:
             print("Preds")
             print(i, pred[0][0][i])
             print("Mask")
-            print(mask)
+            print(mask[0][0][i])
 
         
 
