@@ -164,7 +164,7 @@ if __name__ == "__main__":
 
     ## check relations numbers
     if True:
-        for i in range(10):
+        for r in range(10):
             r_name = relation_vocab[r % num_relation]
             print("i, r_name")
             print(i, r_name)
