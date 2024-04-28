@@ -27,7 +27,7 @@ def create_triples(relation, num_triples):
 
   triples = [] 
   for i in range(num_triples):
-    t = [i, 1, relation]
+    t = [i, i, relation]
     triples.append(t)
   return triples
 
@@ -62,7 +62,7 @@ def batch_results(solver, batch):
 @torch.no_grad()
 def batch_evaluate(solver, batch):
   batch = batch.to("cuda")
-  pred, target = solver.model.predict_and_target(batch)
+  pred, (mask, target) = solver.model.predict_and_target(batch)
 
   pred_cpu = pred.cpu()
   #target_cpu = target.cpu()
@@ -70,7 +70,7 @@ def batch_evaluate(solver, batch):
   del pred
   del target
   
-  return pred_cpu[:, 0, :]
+  return pred_cpu[:, 0, :], pred_cpu[:, 1, :]
   
 
 
@@ -108,6 +108,7 @@ if __name__ == "__main__":
       num_triples = 14541
       triples = torch.tensor(create_triples(relation, num_triples), device="cpu")
       result_tensor = torch.empty(14541, 14541, device="cpu")
+      result_tensor_inv = torch.empty(14541, 14541, device="cpu")
 
       batches_operation = True
 
@@ -115,35 +116,12 @@ if __name__ == "__main__":
         solver.model.eval()
         for batch in batch_tensors(triples, batch_size):
           print("Numero batch", count)
-          print("Index =", index)
-          pred = batch_evaluate(solver, batch)
-          print("Predicciones (shape) luego del batch_evaluate", pred.shape)
+          pred, pred_inv = batch_evaluate(solver, batch)
           batch_actual_size = pred.size(0)
-          print("batch actual size", batch_actual_size)
-          print("index + batch_actual_size")
+          
           result_tensor[index:index+batch_actual_size] = pred
+          result_tensor_inv[index:index+batch_actual_size] = pred_inv
           index += batch_actual_size
           count +=1
-          print(result_tensor)
-        save_tensor(relation, result_tensor)
-      
-
-      elif batches_operation:
-        for batch in batch_tensors(triples, batch_size):
-          print("Numero batch", count)
-          batch_preds = batch_results(solver, batch)
-          print("Batch_preds", batch_preds)
-          batch_size = batch_preds.size(0)
-          result_tensor[index:index+batch_size] = batch_preds
-          index += batch_size
-          count +=1
-          print("Cuda memory after batch", count, torch.cuda.memory_allocated())
-        save_tensor(relation, result_tensor)
-
-      else:
-        for t in triples:
-          print("Triplet", t)
-          tensor_row = obtain_results(solver, t).unsqueeze(0).cpu()  # Unsqueezing to add a new dimension (to make it a row tensor)
-          result_tensor[index] = tensor_row
-          index += 1
-        save_tensor(relation, result_tensor)
+        save_tensor(relation*2, result_tensor)
+        save_tensor(relation*2+1, result_tensor)
