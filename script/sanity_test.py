@@ -129,13 +129,10 @@ if __name__ == "__main__":
     if True:
         triplet = solver.test_set[1]
         h, t, r = triplet.tolist()
+        print("h t r", h,t,r)
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
         solver.model.eval()
         pred, (mask, target) = solver.model.predict_and_target(triplet)
-
-        triplet_2 = torch.as_tensor([[927, 259, 202]], device=solver.device)
-        solver.model.eval()
-        pred_2, (mask_2, target_2) = solver.model.predict_and_target(triplet_2)
 
         print("pred[0][0]", pred[0][0])
         print("pred[0][1]", pred[0][1])
