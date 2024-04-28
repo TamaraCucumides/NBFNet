@@ -131,7 +131,7 @@ if __name__ == "__main__":
         solver.model.eval()
         pred, (mask, target) = solver.model.predict_and_target(triplet)
 
-        triplet_2 = torch.as_tensor([[927, 160, 160]], device=solver.device)
+        triplet_2 = torch.as_tensor([[927, 259, 202]], device=solver.device)
         solver.model.eval()
         pred_2, (mask_2, target_2) = solver.model.predict_and_target(triplet_2)
 
