@@ -129,8 +129,15 @@ if __name__ == "__main__":
     if True:
         triplet = solver.test_set[1]
         h, t, r = triplet.tolist()
-        print("h t r", h,t,r)
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
+
+        h_name = entity_vocab[h]
+        t_name = entity_vocab[t]
+        r_name = relation_vocab[r % num_relation]
+        
+        print("h t r", h,t,r)
+        print("h t r", h_name, t_name, r_name)
+        
         solver.model.eval()
         pred, (mask, target) = solver.model.predict_and_target(triplet)
 
