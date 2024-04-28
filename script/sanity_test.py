@@ -140,6 +140,7 @@ if __name__ == "__main__":
 
         print("Positions where mask is False")
         false_indices = torch.nonzero(~mask[0][0]).squeeze()
+        print(false_indices)
 
         print("Easy answers")
         for i in [160,259,1800,2370,2736,3730,5341,7940,8644]:
