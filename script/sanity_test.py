@@ -131,15 +131,23 @@ if __name__ == "__main__":
         solver.model.eval()
         pred, (mask, target) = solver.model.predict_and_target(triplet)
 
+        triplet_2 = torch.as_tensor([[927, 160, 160]], device=solver.device)
+        solver.model.eval()
+        pred_2, (mask_2, target_2) = solver.model.predict_and_target(triplet_2)
+
         print("pred[0][0]", pred[0][0])
         print("pred[0][1]", pred[0][1])
 
         print("Easy answers")
         for i in [160,259,1800,2370,2736,3730,5341,7940,8644]:
-            print("Preds")
+            print("Preds 1")
             print(i, pred[0][0][i])
-            print("Mask")
+            print("Mask 1")
             print(mask[0][0][i])
+            print("Preds 2")
+            print(i, pred_2[0][0][i])
+            print("Mask 2")
+            print(mask_2[0][0][i])
             
         print("Hard answers")
         for i in [3232]:
