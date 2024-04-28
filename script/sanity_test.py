@@ -147,10 +147,6 @@ if __name__ == "__main__":
             print(i, pred[0][0][i])
             print("Mask 1")
             print(mask[0][0][i])
-            print("Preds 2")
-            print(i, pred_2[0][0][i])
-            print("Mask 2")
-            print(mask_2[0][0][i])
             
         print("Hard answers")
         for i in [3232]:
