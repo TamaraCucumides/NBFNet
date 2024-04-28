@@ -126,7 +126,7 @@ if __name__ == "__main__":
             print("target", target)
 
     # Evaluate a couple of 1p queries
-    if True:
+    if False:
         triplet = solver.test_set[1]
         h, t, r = triplet.tolist()
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
@@ -161,6 +161,16 @@ if __name__ == "__main__":
             print(i, pred[0][0][i])
             print("Mask")
             print(mask[0][0][i])
+
+    ## check relations numbers
+    if True:
+        for i in range(10):
+            r_name = relation_vocab[r % num_relation]
+            print("i, r_name")
+            print(i, r_name)
+
+
+    
 
         
 
