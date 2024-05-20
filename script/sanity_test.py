@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # Evaluate a couple of 1p queries
     if False:
         triplet = solver.test_set[1]
-        # Query is ???
+        # Query is 6651 637 13
         h, t, r = triplet.tolist()
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
         inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
