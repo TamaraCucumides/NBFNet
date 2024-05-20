@@ -171,6 +171,7 @@ if __name__ == "__main__":
             print(r, r_name)
 
     if True:
+        print("Num relation", num_relation)
         for i in range(10):
             triplet = solver.test_set[i]
             h, t, r = triplet.tolist()
