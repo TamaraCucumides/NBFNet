@@ -126,7 +126,7 @@ if __name__ == "__main__":
             print("target", target)
 
     # Evaluate a couple of 1p queries
-    if True:
+    if False:
         triplet = solver.test_set[1]
         # Query is ???
         h, t, r = triplet.tolist()
@@ -169,6 +169,12 @@ if __name__ == "__main__":
             r_name = relation_vocab[r % num_relation]
             print("r, r_name")
             print(r, r_name)
+
+    if True:
+        for i in range(10):
+            triplet = solver.test_set[i]
+            h, t, r = triplet.tolist()
+            print(h,t,r)
 
 
     
