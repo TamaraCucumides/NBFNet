@@ -141,13 +141,17 @@ if __name__ == "__main__":
         print("h t r", h_name, t_name, r_name)
         
         solver.model.eval()
-        pred, (mask, target) = solver.model.predict_and_target(inverse)
+        pred, (mask, target) = solver.model.predict_and_target(triplet)
 
         print("pred[0][0]", pred[0][0])
         print("pred[0][1]", pred[0][1])
 
         print("Positions where mask is False")
         false_indices = torch.nonzero(~mask[0][0]).squeeze()
+        print(false_indices)
+
+        print("Positions where mask-1 is False")
+        false_indices = torch.nonzero(~mask[0][1]).squeeze()
         print(false_indices)
 
         print("Easy answers")
