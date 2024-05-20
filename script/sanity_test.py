@@ -126,7 +126,7 @@ if __name__ == "__main__":
             print("target", target)
 
     # Evaluate a couple of 1p queries
-    if False:
+    if True:
         triplet = solver.test_set[1]
         # Query is 6651 637 13
         h, t, r = triplet.tolist()
@@ -171,7 +171,7 @@ if __name__ == "__main__":
             print("r, r_name")
             print(r, r_name)
 
-    if True:
+    if False:
         print("Num relation", num_relation)
         for i in range(10):
             triplet = solver.test_set[i]
