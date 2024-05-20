@@ -131,6 +131,7 @@ if __name__ == "__main__":
         # Query is ???
         h, t, r = triplet.tolist()
         triplet = torch.as_tensor([[h, t, r]], device=solver.device)
+        inverse = torch.as_tensor([[t, h, r + num_relation]], device=solver.device)
 
         h_name = entity_vocab[h]
         t_name = entity_vocab[t]
@@ -140,7 +141,7 @@ if __name__ == "__main__":
         print("h t r", h_name, t_name, r_name)
         
         solver.model.eval()
-        pred, (mask, target) = solver.model.predict_and_target(triplet)
+        pred, (mask, target) = solver.model.predict_and_target(inverse)
 
         print("pred[0][0]", pred[0][0])
         print("pred[0][1]", pred[0][1])
